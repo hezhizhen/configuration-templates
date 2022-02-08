@@ -1,0 +1,44 @@
+run:
+  timeout: 10m
+  skip-dirs:
+    - hack
+  skip-dirs-use-default: true
+  skip-files:
+    - "^zz_generated.*"
+
+issues:
+  max-same-issues: 0
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - dupl
+
+linters:
+  disable-all: true
+  enable: # please keep this alphabetized
+    - deadcode
+    - dupl
+    - errcheck
+    - gofmt
+    - goimports
+    - gosimple
+    - govet
+    - ineffassign
+    - misspell
+    - staticcheck
+    - structcheck
+    - typecheck
+    - unused
+    - unconvert
+    - unparam
+    - varcheck
+
+linters-settings: # please keep this alphabetized
+  errcheck:
+    ignore: fmt:.*,Read|Write|Close|Exec,io:Copy
+  staticcheck: # https://staticcheck.io/docs/options#checks
+    checks: ["all", "-SA4006", "-SA5001"]
+
+service:
+  # use the fixed version to not introduce new linters unexpectedly
+  golangci-lint-version: 1.44.0
