@@ -1,5 +1,5 @@
 run:
-  timeout: 10m
+  timeout: 5m
   skip-dirs:
     - hack
   skip-dirs-use-default: true
@@ -16,29 +16,35 @@ issues:
 linters:
   disable-all: true
   enable: # please keep this alphabetized
-    - deadcode
-    - dupl
-    - errcheck
-    - gofmt
-    - goimports
-    - gosimple
-    - govet
-    - ineffassign
-    - misspell
-    - staticcheck
-    - structcheck
-    - typecheck
-    - unused
-    - unconvert
-    - unparam
-    - varcheck
+    - bodyclose   # checks whether HTTP response body is closed successfully
+    - errcheck    # unchecked errors
+    - gofmt       # checks if code is gofmt-ed
+    - goimports   # checks if import statements are formatted
+    - gosimple    # simplifies code
+    - govet       # reports suspicious constructs
+    - ineffassign # assignments to existing variables are not used
+    - misspell    # commonly misspelled English words in comments
+    - revive      # configurable linter
+    - staticcheck # a set of rules from staticcheck
+    - typecheck   # parses and type-checks code
+    - unconvert   # removes unnecessary type conversions
+    - unparam     # checks for unused function parameters
+    - unused      # checks for unused constants, variables, functions and types
+    - usestdlibvars # uses variables/constants from standard library
 
 linters-settings: # please keep this alphabetized
   errcheck:
     ignore: fmt:.*,Read|Write|Close|Exec,io:Copy
   staticcheck: # https://staticcheck.io/docs/options#checks
     checks: ["all", "-SA4006", "-SA5001"]
+  revive:
+    rules: # https://github.com/mgechev/revive#available-rules
+      - name: duplicated-imports
+      - name: indent-error-flow
+      - name: unreachable-code
+      - name: unused-parameter
+      - name: unused-receiver
 
 service:
   # use the fixed version to not introduce new linters unexpectedly
-  golangci-lint-version: 1.44.0
+  golangci-lint-version: 1.51.1
